@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 def create_app(script_info=None):
@@ -11,8 +12,12 @@ def create_app(script_info=None):
     app.config.from_object(app_settings)
     db.init_app(app)
 
+
     from src.api.ping import ping_blueprint
     app.register_blueprint(ping_blueprint)
+
+    from src.api.users import users_blueprint 
+    app.register_blueprint(users_blueprint)
 
     @app.shell_context_processor
     def ctx():
