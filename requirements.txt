@@ -17,3 +17,4 @@ SQLAlchemy==2.0.23
 typing_extensions==4.8.0
 Werkzeug==2.3.8
 psycopg2-binary==2.9.5
+pytest==7.4.3
