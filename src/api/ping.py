@@ -1,21 +1,15 @@
-# src/__init__.py
-import os
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+# src/api/ping.py
+from flask import Blueprint
+from flask_restx import Resource, Api
 
-db = SQLAlchemy()
+ping_blueprint = Blueprint('ping', __name__)
+api = Api(ping_blueprint)
 
-def create_app(script_info=None):
-    app = Flask(__name__)
-    app_settings = os.getenv('APP_SETTINGS')
-    app.config.from_object(app_settings)
-    db.init_app(app)
+class Ping(Resource):
+    def get(self):
+        return {
+            'status': 'success',
+            'message': 'pong!'
+        }
 
-    from src.api.ping import ping_blueprint
-    app.register_blueprint(ping_blueprint)
-
-    @app.shell_context_processor
-    def ctx():
-        return {'app': app, 'db': db}
-
-    return app
+api.add_resource(Ping, '/ping')
